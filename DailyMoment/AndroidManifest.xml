@@ -20,7 +20,14 @@
         <activity
             android:name="edu.kmu.vd.dailymoment.activities.CalendarActivity"
             android:label="@string/title_activity_calendar" >
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
+            </intent-filter>
         </activity>
+        <activity android:name=".activities.ConfigActivity"></activity>
+        <activity android:name=".activities.DayActivity"></activity>
+        <activity android:name=".activities.ScheduleActivity"></activity>
     </application>
 
 </manifest>

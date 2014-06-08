@@ -1,4 +1,5 @@
 package edu.kmu.vd.dailymoment.activities;
+
 //@TODO 복구.
 import android.app.Activity;
 import android.content.Context;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.widget.CompoundButton;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 import android.widget.Switch;
+import edu.kmu.vd.dailymoment.R;
 import edu.kmu.vd.dailymoment.services.LockService;
 
 public class ConfigActivity extends Activity {
@@ -27,12 +29,12 @@ public class ConfigActivity extends Activity {
 		localEditor.commit();
 	}
 
-	protected void onCreate(Bundle paramBundle) {
-		super.onCreate(paramBundle);
-		setContentView(2130903065);
+	protected void onCreate(Bundle bundle) {
+		super.onCreate(bundle);
+		setContentView(R.layout.activity_config);
 		Log.d("경과보고", "setContentView");
-		preferences = getSharedPreferences("Setting", 0);
-		mSwitch = ((Switch) findViewById(2131099715));
+		preferences = getSharedPreferences(PREFERENCE_NAME, MODE_PRIVATE);
+		mSwitch = ((Switch) findViewById(R.id.config_switch));
 		if (getPreference()) {
 			Log.d("스위치기본", "켜짐");
 			mSwitch.setChecked(true);
@@ -48,18 +50,12 @@ public class ConfigActivity extends Activity {
 					startService(new Intent(ctx, LockService.class));
 					setPreference(true);
 					return;
+				} else {
+					Log.d("스위치", "꺼짐");
+					stopService(new Intent(ctx, LockService.class));
+					setPreference(false);
 				}
-				Log.d("스위치", "꺼짐");
-				stopService(new Intent(ctx, LockService.class));
-				setPreference(false);
 			}
 		});
 	}
 }
-
-/*
- * Location:
- * C:\Users\KaiEn\Desktop\edu.kmu.vd.dailymoment-1\edu.kmu.vd.dailymoment
- * -1_dex2jar.jar Qualified Name: edu.kmu.vd.dailymoment.calendar.ConfigActivity
- * JD-Core Version: 0.6.0
- */

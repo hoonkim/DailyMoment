@@ -5,18 +5,21 @@ import java.util.ArrayList;
 import java.util.Calendar;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
+import android.view.View.OnTouchListener;
+import android.view.Window;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.TextView;
+import edu.kmu.vd.dailymoment.R;
 import edu.kmu.vd.dailymoment.adapters.CalendarAdapter;
 import edu.kmu.vd.dailymoment.adapters.DayInfo;
-import edu.kmu.vd.dailymoment.services.LockService;
 
 public class CalendarActivity extends Activity {
 
@@ -37,6 +40,74 @@ public class CalendarActivity extends Activity {
 	private Calendar mThisMonthCalendar;
 	private TextView mTvCalendarTitle;
 	private SharedPreferences preferences;
+
+	protected void onCreate(Bundle bundle) {
+		super.onCreate(bundle);
+
+		final Context ctx = this;
+
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
+		setContentView(R.layout.activity_calendar);
+		preferences = getSharedPreferences("Setting", 0);
+		if (getPreference()) {
+			Log.d("스위치기본", "켜짐");
+			// startService(new Intent(this, LockService.class));
+		}
+		ImageView configButton = ((ImageView) findViewById(R.id.calendar_activity_config));
+		configButton.setOnTouchListener(new OnTouchListener() {
+			public boolean onTouch(View view, MotionEvent motionEvent) {
+				Intent intent = new Intent(ctx, ConfigActivity.class);
+				startActivity(intent);
+				return false;
+			}
+		});
+
+		mGvCalendar = (GridView) findViewById(R.id.calendar_activity_grid);
+		mGvCalendar.setOnTouchListener(new View.OnTouchListener() {
+			public boolean onTouch(View paramView, MotionEvent motionEvent) {
+				int action = motionEvent.getActionMasked();
+				float currentXPosition = motionEvent.getX();
+				float currentYPosition = motionEvent.getY();
+				int position = mGvCalendar.pointToPosition(
+						(int) currentXPosition, (int) currentYPosition);
+
+				DayInfo dayInfo = (DayInfo) mGvCalendar
+						.getItemAtPosition(position);
+
+				if (action == MotionEvent.ACTION_UP) {
+					Log.d("Checking Day", dayInfo.getDay());
+					Intent intent = new Intent(ctx, DayActivity.class);
+					intent.putExtra("Year",
+							mThisMonthCalendar.get(Calendar.YEAR) + "");
+					intent.putExtra("Month",
+							mThisMonthCalendar.get(Calendar.MONTH) + "");
+					intent.putExtra("Date", dayInfo.getDay());
+					startActivity(intent);
+				}
+				return true;
+
+			}
+		});
+		mTvCalendarTitle = ((TextView) findViewById(R.id.calendar_activity_this_month));
+		ImageView prevMonthButton = (ImageView) findViewById(R.id.calendar_activity_prev_month);
+		ImageView nextMonthButton = (ImageView) findViewById(R.id.calendar_activity_next_month);
+		prevMonthButton.setOnTouchListener(new View.OnTouchListener() {
+			public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
+				mThisMonthCalendar = getLastMonth(mThisMonthCalendar);
+				getCalendar(mThisMonthCalendar);
+				return false;
+			}
+		});
+		nextMonthButton.setOnTouchListener(new View.OnTouchListener() {
+			public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
+				mThisMonthCalendar = getNextMonth(mThisMonthCalendar);
+				getCalendar(mThisMonthCalendar);
+				return false;
+			}
+		});
+		mDayList = new ArrayList<DayInfo>();
+
+	}
 
 	private void getCalendar(Calendar calendar) {
 		int lastMonthStartDay;
@@ -100,107 +171,33 @@ public class CalendarActivity extends Activity {
 	private Calendar getLastMonth(Calendar paramCalendar) {
 		paramCalendar.set(paramCalendar.get(1), paramCalendar.get(2), 1);
 		paramCalendar.add(2, -1);
-		this.mTvCalendarTitle.setText(this.mThisMonthCalendar.get(1) + "년 "
-				+ (1 + this.mThisMonthCalendar.get(2)) + "월");
+		mTvCalendarTitle.setText(mThisMonthCalendar.get(1) + "년 "
+				+ (1 + mThisMonthCalendar.get(2)) + "월");
 		return paramCalendar;
 	}
 
 	private Calendar getNextMonth(Calendar paramCalendar) {
 		paramCalendar.set(paramCalendar.get(1), paramCalendar.get(2), 1);
 		paramCalendar.add(2, 1);
-		this.mTvCalendarTitle.setText(this.mThisMonthCalendar.get(1) + "년 "
-				+ (1 + this.mThisMonthCalendar.get(2)) + "월");
+		mTvCalendarTitle.setText(mThisMonthCalendar.get(1) + "년 "
+				+ (1 + mThisMonthCalendar.get(2)) + "월");
 		return paramCalendar;
 	}
 
 	private boolean getPreference() {
-		return this.preferences.getBoolean("locked", true);
+		return preferences.getBoolean("locked", true);
 	}
 
 	private void initCalendarAdapter() {
-		this.mCalendarAdapter = new CalendarAdapter(this, 2130903069,
-				this.mDayList);
-		this.mGvCalendar.setAdapter(this.mCalendarAdapter);
-	}
-
-	protected void onCreate(Bundle paramBundle) {
-		super.onCreate(paramBundle);
-		requestWindowFeature(1);
-		setContentView(2130903064);
-		this.preferences = getSharedPreferences("Setting", 0);
-		if (getPreference()) {
-			Log.d("스위치기본", "켜짐");
-			startService(new Intent(this, LockService.class));
-		}
-		((ImageView) findViewById(2131099709))
-				.setOnTouchListener(new View.OnTouchListener() {
-					public boolean onTouch(View paramView,
-							MotionEvent paramMotionEvent) {
-						Intent localIntent = new Intent(CalendarActivity.this,
-								ConfigActivity.class);
-						CalendarActivity.this.startActivity(localIntent);
-						return false;
-					}
-				});
-		this.mGvCalendar = ((GridView) findViewById(2131099713));
-		this.mGvCalendar.setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
-				int i = paramMotionEvent.getActionMasked();
-				float f1 = paramMotionEvent.getX();
-				float f2 = paramMotionEvent.getY();
-				int j = CalendarActivity.this.mGvCalendar.pointToPosition(
-						(int) f1, (int) f2);
-				DayInfo localDayInfo;
-				if (i == 1) {
-					localDayInfo = (DayInfo) CalendarActivity.this.mGvCalendar
-							.getItemAtPosition(j);
-					if (localDayInfo != null)
-						;
-				} else {
-					return true;
-				}
-				Log.d("Checking Day", localDayInfo.getDay());
-				Intent localIntent = new Intent(CalendarActivity.this,
-						DayActivity.class);
-				localIntent.putExtra("Date", localDayInfo.getDay());
-				localIntent.putExtra("Month",
-						CalendarActivity.this.mThisMonthCalendar.get(2));
-				localIntent.putExtra("Month",
-						CalendarActivity.this.mThisMonthCalendar.get(1));
-				CalendarActivity.this.startActivity(localIntent);
-				return true;
-			}
-		});
-		this.mTvCalendarTitle = ((TextView) findViewById(2131099711));
-		ImageView localImageView1 = (ImageView) findViewById(2131099710);
-		ImageView localImageView2 = (ImageView) findViewById(2131099712);
-		localImageView1.setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
-				CalendarActivity.this.mThisMonthCalendar = CalendarActivity.this
-						.getLastMonth(CalendarActivity.this.mThisMonthCalendar);
-				CalendarActivity.this
-						.getCalendar(CalendarActivity.this.mThisMonthCalendar);
-				return false;
-			}
-		});
-		localImageView2.setOnTouchListener(new View.OnTouchListener() {
-			public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
-				CalendarActivity.this.mThisMonthCalendar = CalendarActivity.this
-						.getNextMonth(CalendarActivity.this.mThisMonthCalendar);
-				CalendarActivity.this
-						.getCalendar(CalendarActivity.this.mThisMonthCalendar);
-				return false;
-			}
-		});
-		this.mDayList = new ArrayList();
-
+		mCalendarAdapter = new CalendarAdapter(this, R.layout.day, mDayList);
+		mGvCalendar.setAdapter(mCalendarAdapter);
 	}
 
 	protected void onResume() {
 		super.onResume();
 		super.onResume();
-		this.mThisMonthCalendar = Calendar.getInstance();
-		this.mThisMonthCalendar.set(5, 1);
-		getCalendar(this.mThisMonthCalendar);
+		mThisMonthCalendar = Calendar.getInstance();
+		mThisMonthCalendar.set(5, 1);
+		getCalendar(mThisMonthCalendar);
 	}
 }

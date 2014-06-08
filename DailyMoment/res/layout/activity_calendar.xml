@@ -5,29 +5,54 @@
     android:orientation="vertical" >
 
     <RelativeLayout
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content" >
 
         <ImageView
-            android:id="@+id/imageView1"
+            android:id="@+id/calendar_activity_logo"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:src="@drawable/calendar_activity_logo" />
 
         <ImageView
-            android:id="@+id/imageView2"
+            android:id="@+id/calendar_activity_config"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
-
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/calendar_activity_setting_icon" />
     </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content" >
+
+        <ImageView
+            android:id="@+id/calendar_activity_prev_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@android:drawable/ic_media_previous" />
+
+        <ImageView
+            android:id="@+id/calendar_activity_next_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@android:drawable/ic_media_next" />
+
+        <TextView
+            android:id="@+id/calendar_activity_this_month"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="false"
+            android:layout_centerInParent="true"
+            android:text="" />
     </RelativeLayout>
 
-    <GridLayout
+    <GridView
+        android:id="@+id/calendar_activity_grid"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
-    </GridLayout>
+        android:layout_height="wrap_content"
+        android:numColumns="7" >
+    </GridView>
 
 </LinearLayout>

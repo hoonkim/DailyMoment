@@ -1,4 +1,5 @@
 package edu.kmu.vd.dailymoment.activities;
+
 //@TODO 복구.
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -34,14 +35,14 @@ public class LockScreenActivity extends Activity {
 				.format(localCalendar.getTime());
 		String date = new SimpleDateFormat(" EEE, MMM dd", Locale.US)
 				.format(localCalendar.getTime());
-		this.dateTextView.setText(Html.fromHtml("<u>" + time + "<br>" + date
+		dateTextView.setText(Html.fromHtml("<u>" + time + "<br>" + date
 				+ "</u>"));
 		Runnable mRunnable = new Runnable() {
 			public void run() {
-				LockScreenActivity.this.changeDateView();
+				changeDateView();
 			}
 		};
-		this.handler.postDelayed(mRunnable, 1000L);
+		handler.postDelayed(mRunnable, 1000L);
 	}
 
 	protected void onCreate(Bundle paramBundle) {
@@ -58,44 +59,35 @@ public class LockScreenActivity extends Activity {
 			return;
 		}
 		setContentView(2130903067);
-		this.dateTextView = ((TextView) findViewById(2131099719));
+		dateTextView = ((TextView) findViewById(2131099719));
 		Typeface localTypeface = Typeface.createFromAsset(getAssets(),
 				"Roboto-Medium.ttf");
-		this.dateTextView.setTypeface(localTypeface);
+		dateTextView.setTypeface(localTypeface);
 		changeDateView();
-		this.mDBController = new DBController(this);
-		ArrayList<Schedule> localArrayList = this.mDBController.getSchedule();
-		this.mListView = ((ListView) findViewById(2131099720));
-		this.mListAdapter = new ListAdapter(this, 2130903070);
-		this.mListView.setAdapter(this.mListAdapter);
-		Iterator localIterator = localArrayList.iterator();
-		while (true) {
-			if (!localIterator.hasNext()) {
-				this.mListAdapter.add(new Schedule(1, "8:00", "9:00",
-						"Breafast"));
-				this.mListAdapter.add(new Schedule(2, "7:00", "9:00", "Wow"));
-				this.mListAdapter
-						.add(new Schedule(3, "8:00", "9:00", "Suyoung"));
-				this.mListAdapter
-						.add(new Schedule(4, "5:00", "9:00", "Samsong"));
-				this.mListAdapter.add(new Schedule(5, "8:00", "9:00",
-						"schedule!"));
-				this.mListAdapter
-						.add(new Schedule(6, "8:00", "9:00", "sleepy"));
-				this.mListAdapter.add(new Schedule(7, "8:00", "9:00", "Test"));
-				this.mListAdapter.add(new Schedule(8, "8:00", "9:00", "run"));
-				this.mListAdapter
-						.add(new Schedule(9, "8:00", "9:00", "siiiii"));
-				this.mListAdapter.add(new Schedule(10, "8:00", "9:00",
-						"qweqweqwe"));
-				return;
-			}
-			Schedule localSchedule = (Schedule) localIterator.next();
-			this.mListAdapter.add(localSchedule);
+
+		mListView = ((ListView) findViewById(2131099720));
+		mListAdapter = new ListAdapter(this, 2130903070);
+		mListView.setAdapter(mListAdapter);
+
+		mDBController = new DBController(this);
+		for (Schedule schedule : mDBController.getSchedule()) {
+			mListAdapter.add(schedule);
 		}
+
+		mListAdapter.add(new Schedule(1, "8:00", "9:00", "Breafast"));
+		mListAdapter.add(new Schedule(2, "7:00", "9:00", "Wow"));
+		mListAdapter.add(new Schedule(3, "8:00", "9:00", "Suyoung"));
+		mListAdapter.add(new Schedule(4, "5:00", "9:00", "Samsong"));
+		mListAdapter.add(new Schedule(5, "8:00", "9:00", "schedule!"));
+		mListAdapter.add(new Schedule(6, "8:00", "9:00", "sleepy"));
+		mListAdapter.add(new Schedule(7, "8:00", "9:00", "Test"));
+		mListAdapter.add(new Schedule(8, "8:00", "9:00", "run"));
+		mListAdapter.add(new Schedule(9, "8:00", "9:00", "siiiii"));
+		mListAdapter.add(new Schedule(10, "8:00", "9:00", "qweqweqwe"));
 	}
 
 	public void startLauncher() {
+		// @TODO 의도치않게 복구 과정에서 난독화 되버림.
 		Iterator localIterator = getPackageManager()
 				.queryIntentActivities(
 						new Intent("android.intent.action.MAIN")
@@ -118,10 +110,3 @@ public class LockScreenActivity extends Activity {
 		startActivity(localIntent);
 	}
 }
-
-/*
- * Location:
- * C:\Users\KaiEn\Desktop\edu.kmu.vd.dailymoment-1\edu.kmu.vd.dailymoment
- * -1_dex2jar.jar Qualified Name: edu.kmu.vd.dailymoment.LockScreen JD-Core
- * Version: 0.6.0
- */
