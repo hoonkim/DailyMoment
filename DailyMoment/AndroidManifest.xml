@@ -14,8 +14,12 @@
         android:label="@string/app_name"
         android:theme="@style/AppTheme" >
         <activity
-            android:name="edu.kmu.vd.dailymoment.LockScreenActivity"
+            android:name="edu.kmu.vd.dailymoment.activities.LockScreenActivity"
             android:label="@string/title_activity_lock_screen" >
+        </activity>
+        <activity
+            android:name="edu.kmu.vd.dailymoment.activities.CalendarActivity"
+            android:label="@string/title_activity_calendar" >
         </activity>
     </application>
 

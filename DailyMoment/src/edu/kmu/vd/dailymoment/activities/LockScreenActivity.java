@@ -1,5 +1,7 @@
-package edu.kmu.vd.dailymoment;
+package edu.kmu.vd.dailymoment.activities;
 
+import edu.kmu.vd.dailymoment.R;
+import edu.kmu.vd.dailymoment.R.layout;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
