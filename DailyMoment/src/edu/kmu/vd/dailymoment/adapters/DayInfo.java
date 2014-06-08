@@ -1,5 +1,4 @@
 package edu.kmu.vd.dailymoment.adapters;
-//@TODO 복구.
 public class DayInfo
 {
   private String day;
@@ -25,8 +24,3 @@ public class DayInfo
     this.inMonth = paramBoolean;
   }
 }
-
-/* Location:           C:\Users\KaiEn\Desktop\edu.kmu.vd.dailymoment-1\edu.kmu.vd.dailymoment-1_dex2jar.jar
- * Qualified Name:     edu.kmu.vd.dailymoment.calendar.DayInfo
- * JD-Core Version:    0.6.0
- */

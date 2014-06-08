@@ -1,6 +1,5 @@
 package edu.kmu.vd.dailymoment.activities;
 
-//@TODO 복구.
 import java.util.ArrayList;
 import java.util.Calendar;
 

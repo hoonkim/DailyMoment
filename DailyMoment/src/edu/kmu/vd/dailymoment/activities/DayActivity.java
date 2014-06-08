@@ -1,6 +1,5 @@
 package edu.kmu.vd.dailymoment.activities;
 
-//@TODO 복구.
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;

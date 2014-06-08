@@ -1,6 +1,5 @@
 package edu.kmu.vd.dailymoment.adapters;
 
-//@TODO 복구.
 import java.util.ArrayList;
 
 import edu.kmu.vd.dailymoment.R;
