@@ -19,6 +19,7 @@ import android.widget.TextView;
 import edu.kmu.vd.dailymoment.R;
 import edu.kmu.vd.dailymoment.adapters.CalendarAdapter;
 import edu.kmu.vd.dailymoment.adapters.DayInfo;
+import edu.kmu.vd.dailymoment.services.LockService;
 
 public class CalendarActivity extends Activity {
 
@@ -50,7 +51,7 @@ public class CalendarActivity extends Activity {
 		preferences = getSharedPreferences("Setting", 0);
 		if (getPreference()) {
 			Log.d("스위치기본", "켜짐");
-			// startService(new Intent(this, LockService.class));
+			startService(new Intent(this, LockService.class));
 		}
 		ImageView configButton = ((ImageView) findViewById(R.id.calendar_activity_config));
 		configButton.setOnTouchListener(new OnTouchListener() {

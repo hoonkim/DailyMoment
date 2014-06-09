@@ -18,26 +18,26 @@ public class LockService extends Service
   public void onCreate()
   {
     super.onCreate();
-    this.mReceiver = new LockReceiver();
+    mReceiver = new LockReceiver();
     IntentFilter localIntentFilter = new IntentFilter("android.intent.action.SCREEN_OFF");
-    registerReceiver(this.mReceiver, localIntentFilter);
+    registerReceiver(mReceiver, localIntentFilter);
   }
 
   public void onDestroy()
   {
     super.onDestroy();
-    if (this.mReceiver != null)
-      unregisterReceiver(this.mReceiver);
+    if (mReceiver != null)
+      unregisterReceiver(mReceiver);
   }
 
   public int onStartCommand(Intent paramIntent, int paramInt1, int paramInt2)
   {
     super.onStartCommand(paramIntent, paramInt1, paramInt2);
-    if ((paramIntent != null) && (paramIntent.getAction() == null) && (this.mReceiver == null))
+    if ((paramIntent != null) && (paramIntent.getAction() == null) && (mReceiver == null))
     {
-      this.mReceiver = new LockReceiver();
+      mReceiver = new LockReceiver();
       IntentFilter localIntentFilter = new IntentFilter("android.intent.action.SCREEN_OFF");
-      registerReceiver(this.mReceiver, localIntentFilter);
+      registerReceiver(mReceiver, localIntentFilter);
     }
     return 3;
   }

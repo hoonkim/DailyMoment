@@ -2,7 +2,6 @@ package edu.kmu.vd.dailymoment.activities;
 
 //@TODO 복구.
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Iterator;
 import java.util.Locale;
@@ -11,13 +10,15 @@ import android.app.Activity;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
-import android.graphics.Typeface;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ListView;
 import android.widget.TextView;
+import edu.kmu.vd.dailymoment.R;
 import edu.kmu.vd.dailymoment.adapters.ListAdapter;
 import edu.kmu.vd.dailymoment.adapters.Schedule;
 import edu.kmu.vd.dailymoment.db.DBController;
@@ -46,8 +47,11 @@ public class LockScreenActivity extends Activity {
 	}
 
 	protected void onCreate(Bundle paramBundle) {
+		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(paramBundle);
-		getWindow().addFlags(6815744);
+		getWindow().addFlags(
+				WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
+						| WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
 		Intent localIntent = getIntent();
 		if (localIntent == null)
 			Log.d("Intent null", "it's null");
@@ -58,15 +62,12 @@ public class LockScreenActivity extends Activity {
 			finish();
 			return;
 		}
-		setContentView(2130903067);
-		dateTextView = ((TextView) findViewById(2131099719));
-		Typeface localTypeface = Typeface.createFromAsset(getAssets(),
-				"Roboto-Medium.ttf");
-		dateTextView.setTypeface(localTypeface);
+		setContentView(R.layout.activity_lock_screen);
+		dateTextView = ((TextView) findViewById(R.id.lockscreen_activity_time));
 		changeDateView();
 
-		mListView = ((ListView) findViewById(2131099720));
-		mListAdapter = new ListAdapter(this, 2130903070);
+		mListView = ((ListView) findViewById(R.id.lockscreen_activity_schedule_list));
+		mListAdapter = new ListAdapter(this, R.layout.schedule);
 		mListView.setAdapter(mListAdapter);
 
 		mDBController = new DBController(this);

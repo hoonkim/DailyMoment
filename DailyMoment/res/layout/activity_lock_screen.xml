@@ -5,8 +5,19 @@
     tools:context="${packageName}.${activityClass}" >
 
     <TextView
+        android:id="@+id/lockscreen_activity_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/hello_world" />
+        android:layout_alignParentBottom="false"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="false"
+        android:layout_alignParentTop="true"
+        android:layout_marginBottom="185dp" />
+
+    <ListView
+        android:id="@+id/lockscreen_activity_schedule_list"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" >
+    </ListView>
 
 </RelativeLayout>
