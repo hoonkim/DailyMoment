@@ -136,8 +136,8 @@ public class CalendarActivity extends Activity {
 		lastMonthStartDay -= (dayOfMonth - 1) - 1;
 
 		// 캘린더 타이틀(년월 표시)을 세팅한다.
-		mTvCalendarTitle.setText(mThisMonthCalendar.get(Calendar.YEAR) + "년 "
-				+ (mThisMonthCalendar.get(Calendar.MONTH) + 1) + "월");
+		mTvCalendarTitle.setText(mThisMonthCalendar.get(Calendar.YEAR) + " / "
+				+ (mThisMonthCalendar.get(Calendar.MONTH) + 1));
 
 		DayInfo day;
 

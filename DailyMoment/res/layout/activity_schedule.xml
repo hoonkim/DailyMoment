@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    android:background="#00a7cd" >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -9,23 +10,61 @@
         android:orientation="vertical" >
 
         <LinearLayout
+            android:id="@+id/activity_schedule_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="horizontal" >
+
+            <ImageView
+                android:id="@+id/activity_schedule_back_image"
+                android:layout_width="wrap_content"
+                android:layout_height="28dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/calendar_prev_month" />
+
+            <TextView
+                android:id="@+id/activity_schedule_back_text"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:fontFamily="sans-serif"
+                android:text="@string/activity_schedule_add"
+                android:textColor="#000000"
+                android:textSize="28sp"
+                android:textStyle="normal" />
+
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/activity_schedule_title"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="@string/activity_schedule_title" />
+                android:layout_marginLeft="20dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/activity_schedule_title"
+                android:textColor="#000000"
+                android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/activity_schedule_title_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/under_line"
                 android:ems="10"
-                android:inputType="text" >
+                android:fontFamily="sans-serif"
+                android:inputType="text"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="normal" >
 
                 <requestFocus />
             </EditText>
@@ -34,80 +73,109 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
             android:orientation="horizontal" >
 
             <TextView
                 android:id="@+id/activity_schedule_category"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="@string/activity_schedule_category" />
+                android:layout_marginLeft="20dp"
+                android:fontFamily="sans-serif"
+                android:paddingRight="20dp"
+                android:text="@string/activity_schedule_category"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="normal" />
 
             <EditText
                 android:id="@+id/activity_schedule_category_edittext"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/under_line"
                 android:ems="10"
-                android:inputType="text" />
+                android:fontFamily="sans-serif"
+                android:inputType="text"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="normal" />
+
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp" >
 
             <TextView
                 android:id="@+id/activity_schedule_start"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="@string/activity_schedule_start" />
-
-            <TextView
-                android:id="@+id/activity_schedule_start_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/under_line"
-                android:text="TextView" />
+                android:layout_marginLeft="20dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/activity_schedule_start"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/activity_schedule_start_time"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/under_line"
-                android:text="AM 0:00" />
+                android:fontFamily="sans-serif"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="normal" />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp" >
 
             <TextView
                 android:id="@+id/activity_schedule_end"
-                android:layout_width="wrap_content"
+                android:layout_width="130dp"
                 android:layout_height="wrap_content"
-                android:text="@string/activity_schedule_end" />
-
-            <TextView
-                android:id="@+id/activity_schedule_end_date"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/under_line"
-                android:text="TextView" />
+                android:layout_marginLeft="20dp"
+                android:fontFamily="sans-serif"
+                android:text="@string/activity_schedule_end"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="normal" />
 
             <TextView
                 android:id="@+id/activity_schedule_end_time"
-                android:layout_width="wrap_content"
+                android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
                 android:background="@drawable/under_line"
-                android:text="AM 0:00" />
+                android:fontFamily="sans-serif"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="normal" />
         </LinearLayout>
     </LinearLayout>
 
     <TextView
         android:id="@+id/activity_schedule_ok"
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
         android:background="@drawable/ok_border"
-        android:text="@string/activity_schedule_ok" />
+        android:fontFamily="sans-serif"
+        android:gravity="center"
+        android:text="@string/activity_schedule_ok"
+        android:textColor="#000000"
+        android:textSize="35sp"
+        android:textStyle="normal" />
 
 </RelativeLayout>

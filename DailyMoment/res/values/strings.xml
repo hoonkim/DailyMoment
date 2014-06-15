@@ -11,5 +11,9 @@
     <string name="activity_schedule_start">START</string>
     <string name="activity_schedule_end">END</string>
     <string name="activity_schedule_ok">OK</string>
+    <string name="activity_lockscreen_unlock">UNLOCK</string>
+    <string name="activity_schedule_add">ADD SCHEDULE</string>
+    <string name="activity_config_switch_text">LockScreen Mode</string>
+    <string name="activity_config_back_text">SETTING</string>
 
 </resources>

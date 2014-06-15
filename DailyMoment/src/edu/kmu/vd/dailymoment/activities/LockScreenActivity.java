@@ -14,6 +14,9 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Html;
 import android.util.Log;
+import android.view.MotionEvent;
+import android.view.View;
+import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.ListView;
@@ -30,12 +33,17 @@ public class LockScreenActivity extends Activity {
 	private ListAdapter mListAdapter;
 	private ListView mListView;
 
+	@Override
+	public void onBackPressed() {
+		return;
+	};
+
 	private void changeDateView() {
 		Calendar localCalendar = Calendar.getInstance();
-		String time = new SimpleDateFormat("HH:mm", Locale.US)
-				.format(localCalendar.getTime());
-		String date = new SimpleDateFormat(" EEE, MMM dd", Locale.US)
-				.format(localCalendar.getTime());
+		String time = new SimpleDateFormat("HH:mm", Locale.US).format(
+				localCalendar.getTime()).toUpperCase();
+		String date = new SimpleDateFormat(" EEE, MMM dd", Locale.US).format(
+				localCalendar.getTime()).toUpperCase();
 		dateTextView.setText(Html.fromHtml("<u>" + time + "<br>" + date
 				+ "</u>"));
 		Runnable mRunnable = new Runnable() {
@@ -60,7 +68,6 @@ public class LockScreenActivity extends Activity {
 			Log.d("not null", "it's not null");
 			startLauncher();
 			finish();
-			return;
 		}
 		setContentView(R.layout.activity_lock_screen);
 		dateTextView = ((TextView) findViewById(R.id.lockscreen_activity_time));
@@ -74,6 +81,19 @@ public class LockScreenActivity extends Activity {
 		for (Schedule schedule : mDBController.getSchedule()) {
 			mListAdapter.add(schedule);
 		}
+
+		TextView unLockButton = (TextView) findViewById(R.id.activity_lockscreen_unlock);
+		unLockButton.setOnTouchListener(new OnTouchListener() {
+
+			@Override
+			public boolean onTouch(View v, MotionEvent event) {
+				finish();
+				overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
+				return false;
+			}
+		});
+
+		unLockButton.bringToFront();
 
 		mListAdapter.add(new Schedule(1, "8:00", "9:00", "Breafast"));
 		mListAdapter.add(new Schedule(2, "7:00", "9:00", "Wow"));

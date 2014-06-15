@@ -2,22 +2,52 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="#FEC033"
     tools:context="${packageName}.${activityClass}" >
+
+    <TextView
+        android:id="@+id/activity_lockscreen_unlock"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_marginBottom="20dp"
+        android:layout_marginRight="20dp"
+        android:fontFamily="sans-serif"
+        android:gravity="right"
+        android:text="@string/activity_lockscreen_unlock"
+        android:textColor="#ffffff"
+        android:textSize="28sp"
+        android:textStyle="normal|bold" />
 
     <TextView
         android:id="@+id/lockscreen_activity_time"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_alignParentBottom="false"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentRight="false"
+        android:layout_alignParentRight="true"
         android:layout_alignParentTop="true"
-        android:layout_marginBottom="185dp" />
+        android:layout_marginRight="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="sans-serif"
+        android:gravity="right"
+        android:textColor="#ffffff"
+        android:textSize="28sp"
+        android:textStyle="normal|bold" />
 
     <ListView
         android:id="@+id/lockscreen_activity_schedule_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content" >
+        android:layout_height="wrap_content"
+        android:divider="#ffffff"
+        android:headerDividersEnabled="true" >
+
     </ListView>
+
+    <ImageView
+        android:id="@+id/activity_lockscreen_logo"
+        android:layout_width="200dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:src="@drawable/calendar_activity_logo" />
 
 </RelativeLayout>

@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.kmu.vd.dailymoment.R;
@@ -33,14 +34,18 @@ public class DayActivity extends Activity {
 		mDate = intent.getExtras().getString("Date");
 
 		Log.d("DayActivity Entered", mYear + "");
-		TextView backButton = (TextView) findViewById(R.id.day_activity_time);
-		backButton.setText("< " + mMonth + "/" + mDate);
+		TextView date = (TextView) findViewById(R.id.day_activity_time);
+		date.setText(mMonth + " / " + mDate);
+
+		LinearLayout backButton = (LinearLayout) findViewById(R.id.activity_day_back);
 		backButton.setOnTouchListener(new View.OnTouchListener() {
 			public boolean onTouch(View paramView, MotionEvent paramMotionEvent) {
 				onBackPressed();
 				return false;
 			}
 		});
+		backButton.bringToFront();
+		
 		TextView addButton = (TextView) findViewById(R.id.day_activity_add);
 
 		final Context context = this;
@@ -50,7 +55,7 @@ public class DayActivity extends Activity {
 				intent.putExtra("Year", mYear);
 				intent.putExtra("Month", mMonth);
 				intent.putExtra("Date", mDate);
-				
+
 				startActivity(intent);
 				return false;
 			}
@@ -64,5 +69,17 @@ public class DayActivity extends Activity {
 		for (Schedule schedule : mDBController.getSchedule()) {
 			mListAdapter.add(schedule);
 		}
+
+		// @TODO 테스트용이니 지울것.
+		mListAdapter.add(new Schedule(1, "8:00", "9:00", "Breafast"));
+		mListAdapter.add(new Schedule(2, "7:00", "9:00", "Wow"));
+		mListAdapter.add(new Schedule(3, "8:00", "9:00", "Suyoung"));
+		mListAdapter.add(new Schedule(4, "5:00", "9:00", "Samsong"));
+		mListAdapter.add(new Schedule(5, "8:00", "9:00", "schedule!"));
+		mListAdapter.add(new Schedule(6, "8:00", "9:00", "sleepy"));
+		mListAdapter.add(new Schedule(7, "8:00", "9:00", "Test"));
+		mListAdapter.add(new Schedule(8, "8:00", "9:00", "run"));
+		mListAdapter.add(new Schedule(9, "8:00", "9:00", "siiiii"));
+		mListAdapter.add(new Schedule(10, "8:00", "9:00", "qweqweqwe"));
 	}
 }

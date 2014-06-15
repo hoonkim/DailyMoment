@@ -4,12 +4,15 @@ package edu.kmu.vd.dailymoment.activities;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
+import android.view.Window;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TimePicker;
 import edu.kmu.vd.dailymoment.R;
@@ -68,7 +71,7 @@ public class ScheduleActivity extends Activity {
 
 	protected void onCreate(Bundle paramBundle) {
 		super.onCreate(paramBundle);
-
+		requestWindowFeature(Window.FEATURE_NO_TITLE);
 		Intent intent = getIntent();
 		mYear = intent.getExtras().getString("Year");
 		mMonth = intent.getExtras().getString("Month");
@@ -76,13 +79,19 @@ public class ScheduleActivity extends Activity {
 		Log.d("Sibal", mMonth);
 
 		setContentView(R.layout.activity_schedule);
+		
+		LinearLayout backButton = (LinearLayout) findViewById(R.id.activity_schedule_back);
+		
 
-		TextView startDate = (TextView) findViewById(R.id.activity_schedule_start_date);
-		TextView endDate = (TextView) findViewById(R.id.activity_schedule_end_date);
-
-		startDate.setText(mYear + "." + mMonth + "." + mDate);
-		endDate.setText(mYear + "." + mMonth + "." + mDate);
-
+		backButton.setOnTouchListener(new OnTouchListener() {
+			
+			@Override
+			public boolean onTouch(View arg0, MotionEvent arg1) {
+				onBackPressed();
+				return false;
+			}
+		});
+	
 		mStartTime = (TextView) findViewById(R.id.activity_schedule_start_time);
 		mEndTime = (TextView) findViewById(R.id.activity_schedule_end_time);
 
