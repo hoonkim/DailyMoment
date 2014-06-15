@@ -5,5 +5,11 @@
     <string name="title_activity_lock_screen">LockScreenActivity</string>
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_calendar">CalendarActivity</string>
+    <string name="add_schedule">ADD SCHEDULE</string>
+    <string name="activity_schedule_title">TITLE</string>
+    <string name="activity_schedule_category">CATEGORY</string>
+    <string name="activity_schedule_start">START</string>
+    <string name="activity_schedule_end">END</string>
+    <string name="activity_schedule_ok">OK</string>
 
 </resources>

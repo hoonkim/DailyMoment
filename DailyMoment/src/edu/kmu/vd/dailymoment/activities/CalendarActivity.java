@@ -80,7 +80,7 @@ public class CalendarActivity extends Activity {
 					intent.putExtra("Year",
 							mThisMonthCalendar.get(Calendar.YEAR) + "");
 					intent.putExtra("Month",
-							mThisMonthCalendar.get(Calendar.MONTH) + "");
+							(mThisMonthCalendar.get(Calendar.MONTH) + 1) + "");
 					intent.putExtra("Date", dayInfo.getDay());
 					startActivity(intent);
 				}

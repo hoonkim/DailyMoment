@@ -1,4 +1,5 @@
 package edu.kmu.vd.dailymoment.db;
+
 //@TODO 복구.
 import java.util.ArrayList;
 
@@ -13,32 +14,31 @@ public class DBController {
 	private DBOpen mDBOpen;
 
 	public DBController(Context paramContext) {
-		this.mDBOpen = new DBOpen(paramContext);
-		this.mDB = this.mDBOpen.getmDB();
+		mDBOpen = new DBOpen(paramContext);
+		mDB = mDBOpen.getmDB();
 	}
 
 	public ArrayList<Schedule> getSchedule() {
-		ArrayList<Schedule> localArrayList = new ArrayList<Schedule>();
+		ArrayList<Schedule> schedule = new ArrayList<Schedule>();
 		try {
-			Cursor localCursor = this.mDB
+			Cursor cursor = mDB
 					.query(true,
 							"schedule",
 							new String[] { "category_id", "start_time",
 									"end_time", "title" },
 							"DATE(SCHEDULE.start_time) >= DATE('now', 'localtime') AND DATE(SCHEDULE.end_time) <= DATE('now', 'localtime')",
 							null, null, null, null, null, null);
-			if (localCursor != null) {
-				localCursor.moveToFirst();
+			if (cursor != null) {
+
 				Log.d("After query", "start");
-				while (true) {
-					if (localCursor.isAfterLast())
-						return localArrayList;
-					Log.d("Query Good", localCursor.getString(3));
-					localArrayList.add(new Schedule(localCursor.getInt(0),
-							localCursor.getString(1), localCursor.getString(2),
-							localCursor.getString(3)));
-					localCursor.moveToNext();
+				for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
+						.moveToNext()) {
+					schedule.add(new Schedule(cursor.getInt(0), cursor
+							.getString(1), cursor.getString(2), cursor
+							.getString(3)));
+
 				}
+				return schedule;
 			}
 		} catch (Exception localException) {
 			Log.e("SQL error", localException.toString());
@@ -48,15 +48,16 @@ public class DBController {
 		return null;
 	}
 
-	public void putSchedule(String paramString1, String paramString2,
-			String paramString3, int paramInt) {
+	public void putSchedule(final String title, final String startTime,
+			String end_time, int categoryId) {
 		String str = "INSERT INTO SCHEDULE ( category_id, start_time, end_time, title) VALUES("
-				+ paramInt
+				+ categoryId
 				+ ", '"
-				+ paramString2
+				+ startTime
 				+ "','"
-				+ paramString3
-				+ "', '" + paramString1 + "');";
-		this.mDB.execSQL(str);
+				+ end_time
+				+ "', '"
+				+ title + "');";
+		mDB.execSQL(str);
 	}
 }

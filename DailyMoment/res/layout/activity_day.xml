@@ -1,7 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent" >
+
+    <ListView
+        android:id="@+id/day_activity_schedule_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent" >
+    </ListView>
 
     <TextView
         android:id="@+id/day_activity_time"
@@ -9,12 +16,16 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_alignParentTop="true"
-        android:text="TextView" />
+        android:text="" />
 
-    <ListView
-        android:id="@+id/day_activity_schedule_list"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" >
-    </ListView>
+    <TextView
+        android:id="@+id/day_activity_add"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:text="+"
+        android:textSize="30sp"
+        tools:ignore="HardcodedText" />
 
 </RelativeLayout>
