@@ -26,7 +26,7 @@ public class Schedule {
 		String iconNumber = "_";
 
 		int startTimeMin = getHour(mStartTime) * 60 + getMin(mStartTime);
-		int endTimeMin = getHour(mEndTime) * 6 - +getMin(mEndTime);
+		int endTimeMin = getHour(mEndTime) * 60 - +getMin(mEndTime);
 		int timeMin = getHour(time) * 60 + getMin(time);
 
 		int diffStart = (startTimeMin - timeMin);

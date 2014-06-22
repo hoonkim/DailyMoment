@@ -37,6 +37,9 @@ public class LockScreenActivity extends Activity {
 
 	private Context mContext;
 
+	private int mHour = 0;
+	private int mMin = 0;
+
 	@Override
 	public void onBackPressed() {
 		return;
@@ -44,8 +47,9 @@ public class LockScreenActivity extends Activity {
 
 	private void changeDateView() {
 		Calendar localCalendar = Calendar.getInstance();
-		String time = new SimpleDateFormat("HH:mm", Locale.US).format(
-				localCalendar.getTime()).toUpperCase();
+		String time = ((mHour < 10) ? "0" + mHour : mHour) + ":"
+				+ ((mMin < 10) ? "0" + mMin : mMin);
+
 		String date = new SimpleDateFormat(" EEE, MMM dd", Locale.US).format(
 				localCalendar.getTime()).toUpperCase();
 		dateTextView.setText(Html.fromHtml("<u>" + time + "<br>" + date
@@ -56,6 +60,14 @@ public class LockScreenActivity extends Activity {
 				changeDateView();
 			}
 		};
+		mMin += 10;
+		if (mMin >= 60) {
+			mMin = 0;
+			mHour += 1;
+			if (mHour >= 24) {
+				mHour = 0;
+			}
+		}
 		handler.postDelayed(mRunnable, 1000L);
 	}
 
@@ -132,7 +144,7 @@ public class LockScreenActivity extends Activity {
 
 	private void updatePhoto(String time) {
 		int max = mListView.getLastVisiblePosition();
-		for (int i = mListView.getFirstVisiblePosition(); i < max; i++) {
+		for (int i = mListView.getFirstVisiblePosition(); i <= max; i++) {
 			View view = mListView.getChildAt(i);
 			Schedule schedule = (Schedule) mListView.getItemAtPosition(i);
 			((ImageView) view.findViewById(R.id.day_activity_schedule_icon))
