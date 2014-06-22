@@ -8,6 +8,7 @@ import java.util.Locale;
 
 import android.app.Activity;
 import android.content.ComponentName;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.ResolveInfo;
 import android.os.Bundle;
@@ -19,6 +20,7 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import edu.kmu.vd.dailymoment.R;
@@ -33,6 +35,8 @@ public class LockScreenActivity extends Activity {
 	private ListAdapter mListAdapter;
 	private ListView mListView;
 
+	private Context mContext;
+
 	@Override
 	public void onBackPressed() {
 		return;
@@ -46,6 +50,7 @@ public class LockScreenActivity extends Activity {
 				localCalendar.getTime()).toUpperCase();
 		dateTextView.setText(Html.fromHtml("<u>" + time + "<br>" + date
 				+ "</u>"));
+		updatePhoto(time);
 		Runnable mRunnable = new Runnable() {
 			public void run() {
 				changeDateView();
@@ -57,6 +62,9 @@ public class LockScreenActivity extends Activity {
 	protected void onCreate(Bundle paramBundle) {
 		this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		super.onCreate(paramBundle);
+
+		mContext = this;
+
 		getWindow().addFlags(
 				WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED
 						| WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
@@ -71,9 +79,8 @@ public class LockScreenActivity extends Activity {
 		}
 		setContentView(R.layout.activity_lock_screen);
 		dateTextView = ((TextView) findViewById(R.id.lockscreen_activity_time));
-		changeDateView();
-
 		mListView = ((ListView) findViewById(R.id.lockscreen_activity_schedule_list));
+
 		mListAdapter = new ListAdapter(this, R.layout.schedule);
 		mListView.setAdapter(mListAdapter);
 
@@ -88,23 +95,15 @@ public class LockScreenActivity extends Activity {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				finish();
+				// 종료 애니메이션
 				overridePendingTransition(R.anim.push_up_in, R.anim.push_up_out);
 				return false;
 			}
 		});
 
 		unLockButton.bringToFront();
+		changeDateView();
 
-		mListAdapter.add(new Schedule(1, "8:00", "9:00", "Breafast"));
-		mListAdapter.add(new Schedule(2, "7:00", "9:00", "Wow"));
-		mListAdapter.add(new Schedule(3, "8:00", "9:00", "Suyoung"));
-		mListAdapter.add(new Schedule(4, "5:00", "9:00", "Samsong"));
-		mListAdapter.add(new Schedule(5, "8:00", "9:00", "schedule!"));
-		mListAdapter.add(new Schedule(6, "8:00", "9:00", "sleepy"));
-		mListAdapter.add(new Schedule(7, "8:00", "9:00", "Test"));
-		mListAdapter.add(new Schedule(8, "8:00", "9:00", "run"));
-		mListAdapter.add(new Schedule(9, "8:00", "9:00", "siiiii"));
-		mListAdapter.add(new Schedule(10, "8:00", "9:00", "qweqweqwe"));
 	}
 
 	public void startLauncher() {
@@ -129,5 +128,17 @@ public class LockScreenActivity extends Activity {
 		localIntent.setFlags(270532608);
 		localIntent.setComponent(localComponentName);
 		startActivity(localIntent);
+	}
+
+	private void updatePhoto(String time) {
+		int max = mListView.getLastVisiblePosition();
+		for (int i = mListView.getFirstVisiblePosition(); i < max; i++) {
+			View view = mListView.getChildAt(i);
+			Schedule schedule = (Schedule) mListView.getItemAtPosition(i);
+			((ImageView) view.findViewById(R.id.day_activity_schedule_icon))
+					.setImageResource(schedule.getIcon(mContext, time));
+
+		}
+
 	}
 }

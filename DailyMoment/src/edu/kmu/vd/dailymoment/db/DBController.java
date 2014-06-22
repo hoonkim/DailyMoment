@@ -2,6 +2,7 @@ package edu.kmu.vd.dailymoment.db;
 
 //@TODO 복구.
 import java.util.ArrayList;
+import java.util.Locale;
 
 import android.content.Context;
 import android.database.Cursor;
@@ -21,43 +22,72 @@ public class DBController {
 	public ArrayList<Schedule> getSchedule() {
 		ArrayList<Schedule> schedule = new ArrayList<Schedule>();
 		try {
-			Cursor cursor = mDB
-					.query(true,
-							"schedule",
-							new String[] { "category_id", "start_time",
-									"end_time", "title" },
-							"DATE(SCHEDULE.start_time) >= DATE('now', 'localtime') AND DATE(SCHEDULE.end_time) <= DATE('now', 'localtime')",
-							null, null, null, null, null, null);
+
+			String query = "select "
+					+ "category, strftime('%H:%M',start_time), strftime('%H:%M',end_time), title "
+					+ "FROM SCHEDULE "
+					+ "WHERE DATE(SCHEDULE.start_time) = DATE('now', 'localtime')";
+
+			Cursor cursor = mDB.rawQuery(query, null);
 			if (cursor != null) {
 
 				Log.d("After query", "start");
 				for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
 						.moveToNext()) {
-					schedule.add(new Schedule(cursor.getInt(0), cursor
+					schedule.add(new Schedule(cursor.getString(0), cursor
 							.getString(1), cursor.getString(2), cursor
 							.getString(3)));
+					Log.d("Sql", "curosr.getString(0)");
 
 				}
 				return schedule;
 			}
 		} catch (Exception localException) {
 			Log.e("SQL error", localException.toString());
-			return null;
+			return schedule;
 		}
 		Log.d("query", "Null");
-		return null;
+		return schedule;
+	}
+
+	public ArrayList<Schedule> getSchedule(String date) {
+		ArrayList<Schedule> schedule = new ArrayList<Schedule>();
+		try {
+
+			String query = "select "
+					+ "category, strftime('%H:%M',start_time), strftime('%H:%M',end_time), title "
+					+ "FROM SCHEDULE WHERE DATE(start_time) = '" + date + "'";
+
+			Log.d("SQL QUERY ", query);
+			Cursor cursor = mDB.rawQuery(query, null);
+			if (cursor != null) {
+
+				Log.d("After query", "start");
+				for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
+						.moveToNext()) {
+					schedule.add(new Schedule(cursor.getString(0), cursor
+							.getString(1), cursor.getString(2), cursor
+							.getString(3)));
+					Log.d("Sql", cursor.getString(0));
+
+				}
+				return schedule;
+			}
+		} catch (Exception localException) {
+			Log.e("SQL error", localException.toString());
+			return schedule;
+		}
+		Log.d("query", "Null");
+		return schedule;
 	}
 
 	public void putSchedule(final String title, final String startTime,
-			String end_time, int categoryId) {
-		String str = "INSERT INTO SCHEDULE ( category_id, start_time, end_time, title) VALUES("
-				+ categoryId
-				+ ", '"
-				+ startTime
-				+ "','"
-				+ end_time
+			String end_time, final String category) {
+		String str = "INSERT INTO SCHEDULE ( category, start_time, end_time, title) VALUES('"
+				+ category.toLowerCase(Locale.ENGLISH)
 				+ "', '"
-				+ title + "');";
+				+ startTime
+				+ "','" + end_time + "', '" + title + "');";
 		mDB.execSQL(str);
 	}
 }

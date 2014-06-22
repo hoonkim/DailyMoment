@@ -33,7 +33,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".activities.ConfigActivity" android:screenOrientation="portrait"></activity>
-        <activity android:name=".activities.DayActivity"></activity>
+        <activity android:name=".activities.DayActivity" android:theme="@android:style/Theme.Translucent"></activity>
         <activity android:name=".activities.ScheduleActivity"></activity>
         <service android:name=".services.LockService"></service>
         <receiver android:name=".receivers.LockReceiver"></receiver>

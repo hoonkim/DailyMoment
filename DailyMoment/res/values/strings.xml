@@ -16,4 +16,67 @@
     <string name="activity_config_switch_text">LockScreen Mode</string>
     <string name="activity_config_back_text">SETTING</string>
 
+    <string-array name="Category">
+        <item>Eat</item>
+        <item>Celebrate</item>
+        <item>Work</item>
+        <item>Rest</item>
+        <item>Outdoor</item>
+        <item>Indoor</item>
+    </string-array>
+    <string-array name="Eat">
+        <item>Breakfast </item>
+        <item>Drinking </item>
+        <item>Cooking </item>
+        <item>Snack </item>
+        <item>Coffee </item>
+        <item>Dinner </item>
+        <item>Dessert </item>
+        <item>Chocolate fountain </item>
+        <item>Love </item>
+    </string-array>
+    <string-array name="Celebrate">
+        <item>Party </item>
+        <item>Love </item>
+        <item>Graduation </item>
+        <item>Baby </item>
+    </string-array>
+    <string-array name="Work">
+        <item> Working </item>
+        <item> Presentation </item>
+        <item> Exam </item>
+        <item> School </item>
+        <item> Study </item>
+        <item> buisness trip </item>
+        <item> Save the city </item>
+        <item> Love </item>
+    </string-array>
+    <string-array name="Rest">
+        <item>Sleep </item>
+        <item>Nap </item>
+        <item>Nothing1 </item>
+        <item>Nothing2 </item>
+        <item>Love </item>
+    </string-array>
+    <string-array name="Outdoor">
+        <item>Riding</item>
+        <item>Walk</item>
+        <item>Picnic</item>
+        <item>Travel</item>
+        <item>Driving</item>
+        <item>Exercise</item>
+        <item>Camping</item>
+        <item>Space travel</item>
+        <item>Love</item>
+    </string-array>
+    <string-array name="Indoor">
+        <item> Movies</item>
+        <item> Reading</item>
+        <item> Exhibition</item>
+        <item> Shopping</item>
+        <item> Show</item>
+        <item> Love</item>
+        <item> Gaming</item>
+    </string-array>
+
 </resources>

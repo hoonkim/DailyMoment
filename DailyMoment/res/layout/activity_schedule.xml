@@ -34,7 +34,6 @@
                 android:textColor="#000000"
                 android:textSize="28sp"
                 android:textStyle="normal" />
-
         </LinearLayout>
 
         <LinearLayout
@@ -88,8 +87,8 @@
                 android:textSize="20sp"
                 android:textStyle="normal" />
 
-            <EditText
-                android:id="@+id/activity_schedule_category_edittext"
+            <Spinner
+                android:id="@+id/activity_schedule_category_spinner"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginRight="20dp"
@@ -100,7 +99,37 @@
                 android:textColor="#000000"
                 android:textSize="20sp"
                 android:textStyle="normal" />
+        </LinearLayout>
 
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:layout_width="130dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:fontFamily="sans-serif"
+                android:paddingRight="20dp"
+                android:text=""
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="normal" />
+
+            <Spinner
+                android:id="@+id/activity_schedule_subcategory_spinner"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/under_line"
+                android:ems="10"
+                android:fontFamily="sans-serif"
+                android:inputType="text"
+                android:textColor="#000000"
+                android:textSize="20sp"
+                android:textStyle="normal" />
         </LinearLayout>
 
         <LinearLayout
