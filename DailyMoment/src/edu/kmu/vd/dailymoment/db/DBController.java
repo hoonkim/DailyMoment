@@ -24,7 +24,7 @@ public class DBController {
 		try {
 
 			String query = "select "
-					+ "category, strftime('%H:%M',start_time), strftime('%H:%M',end_time), title "
+					+ "sid, category, strftime('%H:%M',start_time), strftime('%H:%M',end_time), title "
 					+ "FROM SCHEDULE "
 					+ "WHERE DATE(SCHEDULE.start_time) = DATE('now', 'localtime')";
 
@@ -34,9 +34,9 @@ public class DBController {
 				Log.d("After query", "start");
 				for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
 						.moveToNext()) {
-					schedule.add(new Schedule(cursor.getString(0), cursor
+					schedule.add(new Schedule(cursor.getInt(0), cursor
 							.getString(1), cursor.getString(2), cursor
-							.getString(3)));
+							.getString(3), cursor.getString(4)));
 					Log.d("Sql", "curosr.getString(0)");
 
 				}
@@ -55,7 +55,7 @@ public class DBController {
 		try {
 
 			String query = "select "
-					+ "category, strftime('%H:%M',start_time), strftime('%H:%M',end_time), title "
+					+ "sid, category, strftime('%H:%M',start_time), strftime('%H:%M',end_time), title "
 					+ "FROM SCHEDULE WHERE DATE(start_time) = '" + date + "'";
 
 			Log.d("SQL QUERY ", query);
@@ -65,9 +65,9 @@ public class DBController {
 				Log.d("After query", "start");
 				for (cursor.moveToFirst(); !cursor.isAfterLast(); cursor
 						.moveToNext()) {
-					schedule.add(new Schedule(cursor.getString(0), cursor
+					schedule.add(new Schedule(cursor.getInt(0), cursor
 							.getString(1), cursor.getString(2), cursor
-							.getString(3)));
+							.getString(3), cursor.getString(4)));
 					Log.d("Sql", cursor.getString(0));
 
 				}

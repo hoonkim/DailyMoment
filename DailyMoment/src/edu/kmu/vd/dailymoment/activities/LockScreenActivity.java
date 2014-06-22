@@ -7,6 +7,9 @@ import java.util.Iterator;
 import java.util.Locale;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.ComponentName;
 import android.content.Context;
 import android.content.Intent;
@@ -20,6 +23,8 @@ import android.view.View;
 import android.view.View.OnTouchListener;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -27,6 +32,7 @@ import edu.kmu.vd.dailymoment.R;
 import edu.kmu.vd.dailymoment.adapters.ListAdapter;
 import edu.kmu.vd.dailymoment.adapters.Schedule;
 import edu.kmu.vd.dailymoment.db.DBController;
+import edu.kmu.vd.dailymoment.fragments.EditFragment;
 
 public class LockScreenActivity extends Activity {
 	private TextView dateTextView;
@@ -113,6 +119,30 @@ public class LockScreenActivity extends Activity {
 			}
 		});
 
+		mListView.setOnItemClickListener(new OnItemClickListener() {
+
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				FragmentTransaction ft = getFragmentManager()
+						.beginTransaction();
+				Fragment prev = getFragmentManager()
+						.findFragmentByTag("dialog");
+				if (prev != null) {
+					ft.remove(prev);
+				}
+				ft.addToBackStack(null);
+
+				Schedule schedule = (Schedule) parent
+						.getItemAtPosition(position);
+
+				DialogFragment newFragment = EditFragment.newInstance(
+						schedule.getTitle(), schedule.getCategory(),
+						schedule.getStartTime(), schedule.getEndTime());
+				newFragment.show(ft, "dialog");
+			}
+		});
+
 		unLockButton.bringToFront();
 		changeDateView();
 
@@ -145,12 +175,18 @@ public class LockScreenActivity extends Activity {
 	private void updatePhoto(String time) {
 		int max = mListView.getLastVisiblePosition();
 		for (int i = mListView.getFirstVisiblePosition(); i <= max; i++) {
-			View view = mListView.getChildAt(i);
+			View view = mListView.getChildAt(i
+					- mListView.getFirstVisiblePosition());
 			Schedule schedule = (Schedule) mListView.getItemAtPosition(i);
-			((ImageView) view.findViewById(R.id.day_activity_schedule_icon))
-					.setImageResource(schedule.getIcon(mContext, time));
+			try {
+				((ImageView) view.findViewById(R.id.day_activity_schedule_icon))
+						.setImageResource(schedule.getIcon(mContext, time));
+			} catch (Exception e) {
+
+			}
 
 		}
 
 	}
+
 }

@@ -70,6 +70,12 @@ public class DayActivity extends Activity {
 		});
 
 		mListView = ((ListView) findViewById(R.id.day_activity_schedule_list));
+
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
 		mListAdapter = new ListAdapter(this, R.layout.schedule);
 		mListView.setAdapter(mListAdapter);
 		mDBController = new DBController(this);
