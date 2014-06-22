@@ -43,7 +43,6 @@ public class LockScreenActivity extends Activity {
 
 	private Context mContext;
 
-
 	@Override
 	public void onBackPressed() {
 		return;
@@ -91,11 +90,6 @@ public class LockScreenActivity extends Activity {
 
 		mListAdapter = new ListAdapter(this, R.layout.schedule);
 		mListView.setAdapter(mListAdapter);
-
-		mDBController = new DBController(this);
-		for (Schedule schedule : mDBController.getSchedule()) {
-			mListAdapter.add(schedule);
-		}
 
 		TextView unLockButton = (TextView) findViewById(R.id.activity_lockscreen_unlock);
 		unLockButton.setOnTouchListener(new OnTouchListener() {
@@ -177,6 +171,15 @@ public class LockScreenActivity extends Activity {
 
 		}
 
+	}
+
+	@Override
+	protected void onResume() {
+		super.onResume();
+		mDBController = new DBController(this);
+		for (Schedule schedule : mDBController.getSchedule()) {
+			mListAdapter.add(schedule);
+		}
 	}
 
 }
