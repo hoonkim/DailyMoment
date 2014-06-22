@@ -43,8 +43,6 @@ public class LockScreenActivity extends Activity {
 
 	private Context mContext;
 
-	private int mHour = 0;
-	private int mMin = 0;
 
 	@Override
 	public void onBackPressed() {
@@ -53,8 +51,8 @@ public class LockScreenActivity extends Activity {
 
 	private void changeDateView() {
 		Calendar localCalendar = Calendar.getInstance();
-		String time = ((mHour < 10) ? "0" + mHour : mHour) + ":"
-				+ ((mMin < 10) ? "0" + mMin : mMin);
+		String time = new SimpleDateFormat("HH:mm", Locale.US).format(
+				localCalendar.getTime()).toUpperCase();
 
 		String date = new SimpleDateFormat(" EEE, MMM dd", Locale.US).format(
 				localCalendar.getTime()).toUpperCase();
@@ -66,14 +64,6 @@ public class LockScreenActivity extends Activity {
 				changeDateView();
 			}
 		};
-		mMin += 10;
-		if (mMin >= 60) {
-			mMin = 0;
-			mHour += 1;
-			if (mHour >= 24) {
-				mHour = 0;
-			}
-		}
 		handler.postDelayed(mRunnable, 1000L);
 	}
 
