@@ -195,7 +195,6 @@ public class CalendarActivity extends Activity {
 
 	protected void onResume() {
 		super.onResume();
-		super.onResume();
 		mThisMonthCalendar = Calendar.getInstance();
 		mThisMonthCalendar.set(5, 1);
 		getCalendar(mThisMonthCalendar);

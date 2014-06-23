@@ -88,9 +88,6 @@ public class LockScreenActivity extends Activity {
 		dateTextView = ((TextView) findViewById(R.id.lockscreen_activity_time));
 		mListView = ((ListView) findViewById(R.id.lockscreen_activity_schedule_list));
 
-		mListAdapter = new ListAdapter(this, R.layout.schedule);
-		mListView.setAdapter(mListAdapter);
-
 		TextView unLockButton = (TextView) findViewById(R.id.activity_lockscreen_unlock);
 		unLockButton.setOnTouchListener(new OnTouchListener() {
 
@@ -121,9 +118,11 @@ public class LockScreenActivity extends Activity {
 						.getItemAtPosition(position);
 
 				DialogFragment newFragment = EditFragment.newInstance(
-						schedule.getTitle(), schedule.getCategory(),
-						schedule.getStartTime(), schedule.getEndTime());
+						schedule.getId(), schedule.getTitle(),
+						schedule.getCategory(), schedule.getStartTime(),
+						schedule.getEndTime());
 				newFragment.show(ft, "dialog");
+				onResume();
 			}
 		});
 
@@ -174,8 +173,11 @@ public class LockScreenActivity extends Activity {
 	}
 
 	@Override
-	protected void onResume() {
+	public void onResume() {
 		super.onResume();
+		Log.d("LockScreen", "OnResume");
+		mListAdapter = new ListAdapter(this, R.layout.schedule);
+		mListView.setAdapter(mListAdapter);
 		mDBController = new DBController(this);
 		for (Schedule schedule : mDBController.getSchedule()) {
 			mListAdapter.add(schedule);
