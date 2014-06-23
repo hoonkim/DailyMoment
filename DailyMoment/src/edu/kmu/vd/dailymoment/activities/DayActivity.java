@@ -1,6 +1,9 @@
 package edu.kmu.vd.dailymoment.activities;
 
 import android.app.Activity;
+import android.app.DialogFragment;
+import android.app.Fragment;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -9,13 +12,16 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.AdapterView.OnItemClickListener;
 import edu.kmu.vd.dailymoment.R;
 import edu.kmu.vd.dailymoment.adapters.ListAdapter;
 import edu.kmu.vd.dailymoment.adapters.Schedule;
 import edu.kmu.vd.dailymoment.db.DBController;
+import edu.kmu.vd.dailymoment.fragments.EditFragment;
 
 public class DayActivity extends Activity {
 	private DBController mDBController;
@@ -70,7 +76,29 @@ public class DayActivity extends Activity {
 		});
 
 		mListView = ((ListView) findViewById(R.id.day_activity_schedule_list));
+		mListView.setOnItemClickListener(new OnItemClickListener() {
 
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				FragmentTransaction ft = getFragmentManager()
+						.beginTransaction();
+				Fragment prev = getFragmentManager()
+						.findFragmentByTag("dialog");
+				if (prev != null) {
+					ft.remove(prev);
+				}
+				ft.addToBackStack(null);
+
+				Schedule schedule = (Schedule) parent
+						.getItemAtPosition(position);
+
+				DialogFragment newFragment = EditFragment.newInstance(
+						schedule.getTitle(), schedule.getCategory(),
+						schedule.getStartTime(), schedule.getEndTime());
+				newFragment.show(ft, "dialog");
+			}
+		});
 	}
 
 	@Override
