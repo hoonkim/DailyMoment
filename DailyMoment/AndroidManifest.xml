@@ -37,6 +37,7 @@
         <activity android:name=".activities.ScheduleActivity"></activity>
         <service android:name=".services.LockService"></service>
         <receiver android:name=".receivers.LockReceiver"></receiver>
+        <activity android:name=".activities.EditActivity"></activity>
     </application>
 
 </manifest>

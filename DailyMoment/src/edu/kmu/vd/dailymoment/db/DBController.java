@@ -82,17 +82,27 @@ public class DBController {
 	}
 
 	public void putSchedule(final String title, final String startTime,
-			String end_time, final String category) {
+			String endTime, final String category) {
 		String str = "INSERT INTO SCHEDULE ( category, start_time, end_time, title) VALUES('"
 				+ category.toLowerCase(Locale.ENGLISH)
 				+ "', '"
 				+ startTime
-				+ "','" + end_time + "', '" + title + "');";
+				+ "','" + endTime + "', '" + title + "');";
 		mDB.execSQL(str);
 	}
 
 	public void delete(final int sid) {
 		Log.d("Deleting", sid + "");
 		mDB.delete("SCHEDULE", "sid = " + sid, null);
+	}
+
+	public void update(final int sid, final String title,
+			final String startTime, String endTime, final String category) {
+		String sql = "UPDATE SCHEDULE " + "SET category = '"
+				+ category.toLowerCase() + "', " + "title = '" + title
+				+ "', start_time = '" + startTime + "', end_time = '" + endTime
+				+ "' where sid = " + sid;
+		Log.d("SQL", sql);
+		mDB.execSQL(sql);
 	}
 }

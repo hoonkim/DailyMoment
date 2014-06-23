@@ -1,9 +1,13 @@
 package edu.kmu.vd.dailymoment.fragments;
 
+import java.util.Locale;
+
 import android.app.DialogFragment;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -12,7 +16,7 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import edu.kmu.vd.dailymoment.R;
-import edu.kmu.vd.dailymoment.activities.LockScreenActivity;
+import edu.kmu.vd.dailymoment.activities.EditActivity;
 import edu.kmu.vd.dailymoment.db.DBController;
 
 public class EditFragment extends DialogFragment {
@@ -23,8 +27,10 @@ public class EditFragment extends DialogFragment {
 	private String mStartTime;
 	private String mEndTime;
 
+	private String mDate;
+
 	public static EditFragment newInstance(int sid, String title,
-			String category, String startTime, String endTime) {
+			String category, String startTime, String endTime, String date) {
 		EditFragment f = new EditFragment();
 
 		// Supply num input as an argument.
@@ -34,6 +40,7 @@ public class EditFragment extends DialogFragment {
 		args.putString("category", category);
 		args.putString("startTime", startTime);
 		args.putString("EndTime", endTime);
+		args.putString("date", date);
 		f.setArguments(args);
 
 		return f;
@@ -48,6 +55,7 @@ public class EditFragment extends DialogFragment {
 		mCategory = getArguments().getString("category");
 		mStartTime = getArguments().getString("startTime");
 		mEndTime = getArguments().getString("EndTime");
+		mDate = getArguments().getString("date");
 
 	}
 
@@ -55,6 +63,7 @@ public class EditFragment extends DialogFragment {
 	public View onCreateView(LayoutInflater inflater, ViewGroup container,
 			Bundle savedInstanceState) {
 		View v = inflater.inflate(R.layout.fragment_edit, container, false);
+
 		getDialog().getWindow().setBackgroundDrawable(
 				new ColorDrawable(Color.TRANSPARENT));
 
@@ -88,7 +97,28 @@ public class EditFragment extends DialogFragment {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub
+				Intent intent = new Intent(getActivity(), EditActivity.class);
+				dismiss();
+				intent.putExtra("date", mDate);
+				intent.putExtra("sid", mSid);
+
+				String category = mCategory.split("_")[0];
+				category = category.substring(0, 1).toUpperCase(Locale.ENGLISH)
+						+ category.substring(1);
+				intent.putExtra("category", category);
+
+				String subCategory = mCategory.split("_")[1];
+				subCategory = subCategory.substring(0, 1).toUpperCase(
+						Locale.ENGLISH)
+						+ subCategory.substring(1);
+				intent.putExtra("subCategory", subCategory);
+				
+				intent.putExtra("title", mTitle);
+				intent.putExtra("start", mStartTime);
+				intent.putExtra("end", mEndTime);
+
+				startActivity(intent);
+
 				return false;
 			}
 		});
@@ -100,41 +130,10 @@ public class EditFragment extends DialogFragment {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-//				AlertDialog.Builder builder = new AlertDialog.Builder(
-//						getActivity());
-//
-//				builder.setTitle("Confirm");
-//				builder.setMessage("정말 삭제하시겠습니까?");
-//
-//				builder.setPositiveButton("YES",
-//						new DialogInterface.OnClickListener() {
-//
-//							public void onClick(DialogInterface dialog,
-//									int which) {
-//
-//								
-//								dialog.dismiss();
-//
-//								dismiss();
-//							}
-//
-//						});
-//
-//				builder.setNegativeButton("NO",
-//						new DialogInterface.OnClickListener() {
-//
-//							@Override
-//							public void onClick(DialogInterface dialog,
-//									int which) {
-//								// Do nothing
-//								dialog.dismiss();
-//							}
-//						});
-//
-//				AlertDialog alert = builder.create();
-//				alert.show();
+
 				new DBController(getActivity()).delete(mSid);
-				((LockScreenActivity) getActivity()).onResume();
+
+				// ((Activity) getActivity()).onResume();
 				dismiss();
 				return false;
 			}
@@ -148,7 +147,7 @@ public class EditFragment extends DialogFragment {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				dismiss();
-				
+
 				return false;
 			}
 		});

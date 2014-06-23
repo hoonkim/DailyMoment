@@ -116,11 +116,16 @@ public class LockScreenActivity extends Activity {
 
 				Schedule schedule = (Schedule) parent
 						.getItemAtPosition(position);
+				
+				/* 날짜 받아 옴 */
+				Calendar localCalendar = Calendar.getInstance();
+				String date = new SimpleDateFormat("yyyy-MM-dd", Locale.US).format(
+						localCalendar.getTime()).toUpperCase();
 
 				DialogFragment newFragment = EditFragment.newInstance(
 						schedule.getId(), schedule.getTitle(),
 						schedule.getCategory(), schedule.getStartTime(),
-						schedule.getEndTime());
+						schedule.getEndTime(), date);
 				newFragment.show(ft, "dialog");
 				onResume();
 			}

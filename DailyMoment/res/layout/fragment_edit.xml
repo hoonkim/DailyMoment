@@ -3,7 +3,7 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_centerInParent="true"
-    android:background="#B3000000"
+    android:background="#CC000000"
     android:gravity="center"
     android:orientation="vertical" >
 
