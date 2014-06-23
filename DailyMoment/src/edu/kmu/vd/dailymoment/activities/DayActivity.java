@@ -94,8 +94,9 @@ public class DayActivity extends Activity {
 						.getItemAtPosition(position);
 
 				DialogFragment newFragment = EditFragment.newInstance(
-						schedule.getTitle(), schedule.getCategory(),
-						schedule.getStartTime(), schedule.getEndTime());
+						schedule.getId(), schedule.getTitle(),
+						schedule.getCategory(), schedule.getStartTime(),
+						schedule.getEndTime());
 				newFragment.show(ft, "dialog");
 			}
 		});
