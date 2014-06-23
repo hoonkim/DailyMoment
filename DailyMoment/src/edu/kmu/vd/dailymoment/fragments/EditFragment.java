@@ -12,20 +12,24 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 import edu.kmu.vd.dailymoment.R;
+import edu.kmu.vd.dailymoment.activities.LockScreenActivity;
+import edu.kmu.vd.dailymoment.db.DBController;
 
 public class EditFragment extends DialogFragment {
 
+	private int mSid;
 	private String mTitle;
 	private String mCategory;
 	private String mStartTime;
 	private String mEndTime;
 
-	public static EditFragment newInstance(String title, String category,
-			String startTime, String endTime) {
+	public static EditFragment newInstance(int sid, String title,
+			String category, String startTime, String endTime) {
 		EditFragment f = new EditFragment();
 
 		// Supply num input as an argument.
 		Bundle args = new Bundle();
+		args.putInt("sid", sid);
 		args.putString("title", title);
 		args.putString("category", category);
 		args.putString("startTime", startTime);
@@ -39,6 +43,7 @@ public class EditFragment extends DialogFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setStyle(DialogFragment.STYLE_NO_TITLE, R.style.AppTheme);
+		mSid = getArguments().getInt("sid");
 		mTitle = getArguments().getString("title");
 		mCategory = getArguments().getString("category");
 		mStartTime = getArguments().getString("startTime");
@@ -95,7 +100,42 @@ public class EditFragment extends DialogFragment {
 
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
-				// TODO Auto-generated method stub
+//				AlertDialog.Builder builder = new AlertDialog.Builder(
+//						getActivity());
+//
+//				builder.setTitle("Confirm");
+//				builder.setMessage("정말 삭제하시겠습니까?");
+//
+//				builder.setPositiveButton("YES",
+//						new DialogInterface.OnClickListener() {
+//
+//							public void onClick(DialogInterface dialog,
+//									int which) {
+//
+//								
+//								dialog.dismiss();
+//
+//								dismiss();
+//							}
+//
+//						});
+//
+//				builder.setNegativeButton("NO",
+//						new DialogInterface.OnClickListener() {
+//
+//							@Override
+//							public void onClick(DialogInterface dialog,
+//									int which) {
+//								// Do nothing
+//								dialog.dismiss();
+//							}
+//						});
+//
+//				AlertDialog alert = builder.create();
+//				alert.show();
+				new DBController(getActivity()).delete(mSid);
+				((LockScreenActivity) getActivity()).onResume();
+				dismiss();
 				return false;
 			}
 		});
@@ -108,6 +148,7 @@ public class EditFragment extends DialogFragment {
 			@Override
 			public boolean onTouch(View v, MotionEvent event) {
 				dismiss();
+				
 				return false;
 			}
 		});

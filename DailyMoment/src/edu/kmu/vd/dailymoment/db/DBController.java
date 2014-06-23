@@ -90,4 +90,9 @@ public class DBController {
 				+ "','" + end_time + "', '" + title + "');";
 		mDB.execSQL(str);
 	}
+
+	public void delete(final int sid) {
+		Log.d("Deleting", sid + "");
+		mDB.delete("SCHEDULE", "sid = " + sid, null);
+	}
 }
